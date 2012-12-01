@@ -5,8 +5,11 @@
 package datamining;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,6 +20,13 @@ public class Parser {
     private ArrayList<String> headerCols;
     private ArrayList<String> insertValues;
     private String createTableQ;
+    private Connector con;
+    private static int transactionNo = 0;
+
+    public Parser(Connector aCon) {
+        con = aCon;
+        transactionNo = 0;
+    }
 
     //will probably have to use StringBuffer to read and write.
     //http://www.techrepublic.com/article/stringbuffer-helps-you-reduce-java-overhead/5031999
@@ -53,13 +63,12 @@ public class Parser {
         createTableQ = query;
     }
 
-    public void importInDatabase() throws IOException {
+    public void insertQueries(String someLines) throws IOException {
         String data = "";
         String query;
         String insertCols = ""
                 + "INSERT INTO `kdd98` (";
 
-        //starting from 1 to avoid id column, it is auto incrementing
         for (int i = 0; i < headerCols.size(); i++) {
             insertCols += "`" + headerCols.get(i) + "`";
             if (headerCols.size() == i + 2) {
@@ -70,7 +79,8 @@ public class Parser {
             }
         }
 
-        Scanner sc = new Scanner(readFile("test.txt"));
+        Scanner sc = new Scanner(someLines);
+        System.out.println("Scanner Created");
 
         while (sc.hasNextLine()) {
             Scanner lsc = new Scanner(sc.nextLine());
@@ -79,17 +89,35 @@ public class Parser {
             for (int i = 0; i < headerCols.size(); i++) {
                 data += "'" + lsc.next() + "'";
                 if (headerCols.size() == i + 2) {
-                    data += "), \n";
+                    data += "); \n";
+                    query = insertCols + data;
+                    System.out.println(query);
+                    importLine(query);
+                    data = "";
                     break;
                 } else {
                     data += ", ";
                 }
             }
         }
+    }
 
-        query = insertCols + data;
-        fileOutput(query, "query.sql");
-
+    public void importLine(String aQuery) {
+        try {
+            con.sendUpdate(aQuery);
+            con.commit();
+            System.out.println(transactionNo + " - Transaction Complete");
+            transactionNo++;
+        } catch (SQLException ex) {
+            try {
+                con.rollback();
+            } catch (SQLException ex1) {
+                System.err.println("Even Rollback Failed");
+                Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            System.out.println("Transaction Failed");
+            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void fileOutput(String content, String filename) throws IOException {
@@ -109,6 +137,26 @@ public class Parser {
      * @return
      * @throws IOException
      */
+    public String bufferReadFile(String aFile) throws IOException {
+        String contents = "";
+        String s;
+        BufferedReader fr = new BufferedReader(new InputStreamReader(new FileInputStream(aFile), "UTF8"));
+
+        int i = 0;
+        while ((s = fr.readLine()) != null) {
+            if (i % 100 != 0) {
+                contents += s + "\n";
+            } else {
+                insertQueries(contents);
+                contents = "";
+            }
+
+            System.out.println((i++) + " - line read");
+        }
+        fr.close();
+        return contents;
+    }
+
     public String readFile(String aFile) throws IOException {
         String contents = "";
         String s;
