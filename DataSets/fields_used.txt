@@ -1,0 +1,195 @@
+Variable                    Description
+--------------------------  ------------------------------------------
+ODATEDW                     Origin Date. Date of donor's first gift
+                            to PVA YYMM format (Year/Month).
+							
+TCODE                       Donor title code 
+                            000    = _                     
+                            001    = MR.                   
+                            001001 = MESSRS.               
+                            001002 = MR. & MRS.            
+                            002    = MRS.                  
+                            002002 = MESDAMES              
+                            003    = MISS                  
+                            003003 = MISSES                
+                            004    = DR.                   
+                            004002 = DR. & MRS.            
+                            004004 = DOCTORS               
+                            005    = MADAME                
+                            006    = SERGEANT              
+                            009    = RABBI                 
+                            010    = PROFESSOR             
+                            010002 = PROFESSOR & MRS.      
+                            010010 = PROFESSORS            
+                            011    = ADMIRAL               
+                            011002 = ADMIRAL & MRS.        
+                            012    = GENERAL               
+                            012002 = GENERAL & MRS.        
+                            013    = COLONEL               
+                            013002 = COLONEL & MRS.        
+                            014    = CAPTAIN               
+                            014002 = CAPTAIN & MRS.        
+                            015    = COMMANDER             
+                            015002 = COMMANDER & MRS.      
+                            016    = DEAN                  
+                            017    = JUDGE                 
+                            017002 = JUDGE & MRS.          
+                            018    = MAJOR                 
+                            018002 = MAJOR & MRS.          
+                            019    = SENATOR               
+                            020    = GOVERNOR              
+                            021002 = SERGEANT & MRS.       
+                            022002 = COLNEL & MRS.         
+                            024    = LIEUTENANT            
+                            026    = MONSIGNOR             
+                            027    = REVEREND              
+                            028    = MS.                   
+                            028028 = MSS.                  
+                            029    = BISHOP                
+                            031    = AMBASSADOR            
+                            031002 = AMBASSADOR & MRS.     
+                            033    = CANTOR                
+                            036    = BROTHER               
+                            037    = SIR                   
+                            038    = COMMODORE             
+                            040    = FATHER                
+                            042    = SISTER                
+                            043    = PRESIDENT             
+                            044    = MASTER                
+                            046    = MOTHER                
+                            047    = CHAPLAIN              
+                            048    = CORPORAL              
+                            050    = ELDER                 
+                            056    = MAYOR                 
+                            059002 = LIEUTENANT & MRS.     
+                            062    = LORD                  
+                            063    = CARDINAL              
+                            064    = FRIEND                
+                            065    = FRIENDS               
+                            068    = ARCHDEACON            
+                            069    = CANON                 
+                            070    = BISHOP                
+                            072002 = REVEREND & MRS.       
+                            073    = PASTOR                
+                            075    = ARCHBISHOP            
+                            085    = SPECIALIST            
+                            087    = PRIVATE               
+                            089    = SEAMAN                
+                            090    = AIRMAN                
+                            091    = JUSTICE               
+                            092    = MR. JUSTICE           
+                            100    = M.                    
+                            103    = MLLE.                 
+                            104    = CHANCELLOR            
+                            106    = REPRESENTATIVE        
+                            107    = SECRETARY             
+                            108    = LT. GOVERNOR          
+                            109    = LIC.                  
+                            111    = SA.                   
+                            114    = DA.                   
+                            116    = SR.                   
+                            117    = SRA.                  
+                            118    = SRTA.                 
+                            120    = YOUR MAJESTY          
+                            122    = HIS HIGHNESS          
+                            123    = HER HIGHNESS          
+                            124    = COUNT                 
+                            125    = LADY                  
+                            126    = PRINCE                
+                            127    = PRINCESS              
+                            128    = CHIEF                 
+                            129    = BARON                 
+                            130    = SHEIK                 
+                            131    = PRINCE AND PRINCESS   
+                            132    = YOUR IMPERIAL MAJEST  
+                            135    = M. ET MME.            
+                            210    = PROF.                 
+
+PVASTATE                    EPVA State or PVA State
+                            Indicates whether the donor lives in a state 
+                            served by the organization's EPVA chapter
+                            P = PVA State
+                            E = EPVA State (Northeastern US)
+							
+DOB                         Date of birth (YYMM, Year/Month format.)
+
+RECINHSE                    In House File Flag
+                            _ = Not an In House Record
+                            X = Donor has given to PVA's In House program
+			
+RECP3                       P3 File Flag
+                            _ = Not a P3 Record
+                            X = Donor has given to PVA's P3 program
+
+DOMAIN                      DOMAIN/Cluster code. A nominal or symbolic field. 
+                            could be broken down by bytes as explained below.  
+                           
+                            1st byte = Urbanicity level of the donor's neighborhood
+                              U=Urban
+                              C=City
+                              S=Suburban
+                              T=Town
+                              R=Rural
+                           
+                            2nd byte = Socio-Economic status of the neighborhood
+                              1 = Highest SES
+                              2 = Average SES
+                              3 = Lowest SES (except for Urban communities, where 
+                                  1 = Highest SES, 2 = Above average SES, 
+                                  3 = Below average SES, 4 = Lowest SES.) 
+                           
+AGE                         Overlay Age 
+                            0 = missing						   
+	
+HOMEOWNR                    Home Owner Flag
+                            H = Home owner 
+                            U = Unknown
+							
+NUMCHLD                     NUMBER OF CHILDREN
+
+INCOME                      HOUSEHOLD INCOME
+
+GENDER                      Gender
+                            M = Male
+                            F = Female
+                            U = Unknown
+                            J = Joint Account, unknown gender
+                           
+WEALTH1                     Wealth Rating
+
+HIT                         MOR Flag # HIT (Mail Order Response)
+                            Indicates total number of known times the donor has 
+                            responded to a mail order offer other than PVA's.
+							
+MAJOR                       Major ($$) Donor Flag
+                            _ = Not a Major Donor
+                            X = Major Donor
+							
+WEALTH2                     Wealth Rating
+                            Wealth rating uses median family income and
+                            population statistics from each area to
+                            index relative wealth within each state
+                            The segments are denoted 0-9, with 9 being
+                            the highest income group and zero being the
+                            lowest. Each rating has a different meaning
+                            within each state.
+							
+ADATE_2                     Date the 97NK promotion was mailed 
+
+RFA_2                       Donor's RFA status as of 97NK promotion date 
+
+RAMNTALL                    Dollar amount of lifetime gifts to date
+
+NGIFTALL                    Number of lifetime gifts to date
+
+AVGGIFT                     Average dollar amount of gifts to date           
+
+***Only for Trees and Rules and Neural Net Learning
+
+TARGET_B                    Target Variable: Binary Indicator for Response to 
+                            97NK Mailing
+							
+TARGET_D                    Target Variable: Donation Amount (in $) associated 
+                            with the Response to 97NK Mailing
+
+							
