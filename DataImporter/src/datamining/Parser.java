@@ -75,17 +75,16 @@ public class Parser {
         while (sc.hasNextLine()) {
             Scanner lsc = new Scanner(sc.nextLine());
             lsc.useDelimiter(",");
-            data = "(";
-            while (lsc.hasNext()) {
-                String temp = lsc.next();
-                if (!temp.contains("\n")) {
-                    data += "'" + lsc.next() + "', ";
-                    
+            data += "(";
+            for (int i = 0; i < headerCols.size(); i++) {
+                data += "'" + lsc.next() + "'";
+                if (headerCols.size() == i + 2) {
+                    data += "), \n";
+                    break;
                 } else {
-                    data += "), \n(";
+                    data += ", ";
                 }
             }
-            //data += "), ";
         }
 
         query = insertCols + data;
