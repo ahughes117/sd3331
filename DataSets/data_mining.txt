@@ -1,0 +1,458 @@
+======================================================================
+EPSILON CONFIDENTIAL      EPSILON CONFIDENTIAL    EPSILON CONFIDENTIAL
+
+    INFORMATION LISTED BELOW IS AVAILABLE UNDER THE TERMS OF THE  
+                      CONFIDENTIALITY AGREEMENT                
+
+EPSILON CONFIDENTIAL      EPSILON CONFIDENTIAL    EPSILON CONFIDENTIAL
+======================================================================
+
++--------------------------------------------------------------------+
+|                   DOCUMENTATION TO ACCOMPANY                       |
+|                                                                    |
+|                          KDD-CUP-98                                |
+|                                                                    |
+|          The Second International Knowledge Discovery and          |
+|                 Data Mining Tools Competition                      |
+|                                                                    |
+|                Held in Conjunction with KDD-98                     |
+|                                                                    |
+|          The Fourth International Conference on Knowledge          |
+|                   Discovery and Data Mining                        |
+|                    [www.kdnuggets.com] or                          |
+|                 [www-aig.jpl.nasa.gov/kdd98] or                    |
+|                [www.aaai.org/Conferences/KDD/1998]                 |
+|                                                                    |
+|                       Sponsored by the                             |
+|                                                                    |
+|      American Association for Artificial Intelligence (AAAI)       |
+|                  Epsilon Data Mining Laboratory                    |
+|                Paralyzed Veterans of America (PVA)                 |
++--------------------------------------------------------------------+
+|                                                                    |
+| Created:     7/20/98                                               |
+| Last update: 7/22/98                                               |
+| File name:   cup98DOC.txt                                          |
+|                                                                    |
++--------------------------------------------------------------------+
+
++--------------------------------------------------------------------+
+| GENERAL INSTRUCTIONS (for DOWNLOADS, RESULT RETURNS, etc.)         | 
++--------------------------------------------------------------------+
+
+1. FTP to 159.127.66.10. Login anonymous. Enter email ID as password.
+
+3. The README file contains information about the files included in
+the FTP server.  All data files are compressed. The files with .zip
+extension are compressed with the PKZIP compression utility and they
+are for participants with IBM PC compatible hardware. The PKUNZIP
+utility is needed to unzip these files. The files with .Z extension
+are UNIX COMPRESSed and they are for the participants with UNIX
+compatible hardware. YOU WILL EITHER NEED THE DATA FILES <cup98LRN.ZIP
+AND cup98VAL.ZIP> *OR* <cup98LRN.TXT.Z AND cup98VAL.TXT.Z>, BUT NOT
+BOTH. REMEMBER TO FTP THESE FILES IN BINARY MODE.
+
+4. The data sets are in comma delimited format. The learning dataset
+<cup98LRN.txt> contains 95412 records and 481 fields. The first/header
+row of the data set contains the field names.
+
+The validation dataset <cup98VAL.txt> contains 96367 records and 479
+variables. The first/header row of the data set contains the field
+names.
+
+THE RECORDS IN THE VALIDATION DATASET ARE IDENTICAL TO THE RECORDS IN
+THE LEARNING DATASET EXCEPT THAT THE VALUES FOR THE TARGET/DEPENDENT
+VARIABLES ARE MISSING (i.e., the fields TARGET_B and TARGET_D are
+not included in the validation data set.)
+
+5. The data dictionary (for both the learning and the validation data
+set) is included in the file <cup98DIC.txt>. The fields in the data
+dictionary are ordered by the position of the fields in the learning
+data set. The dictionary for the validation data set is identical to
+the dictionary for the learning data set except the two target fields
+(target_B and target_D) are missing in the validation data set.
+
+6. Blanks in the string (or character) variables/fields and periods in
+the numeric variables correspond to missing values.
+
+7. Each record has a unique record identifier or index (field name:
+CONTROLN.) For each record, there are two target/dependent variables
+(field names: TARGET_B and TARGET_D). TARGET_B is a binary variable
+indicating whether or not the record responded to the promotion of
+interest ("97NK" mailing) while TARGET_D contains the donation amount
+(dollar) and is only observed for those that responded to the
+promotion.
+
+8. THE DEADLINE HAS BEEN EXTENDED. You are required to return the
+questionnaire and the validation dataset of 96367 records by email to
+<iparsa@epsilon.com> by AUGUST 19, 1998.
+
+Each record in the returned file should consist of the following two
+values:
+
+a. The unique record identifier or index (field name: CONTROLN)
+b. Predicted value of the donation (dollar) amount (for the target
+variable TARGET_D) for that record 
+
+You are also required to fill out the questionnaire (file name:
+<cup98QUE.txt>. The questionnaire is used to summarize in bullet
+points the data analytic techniques you've applied to the dataset.
+
+
++--------------------------------------------------------------------+
+| PROJECT OVERVIEW: A Fund Raising Net Return Prediction Model       | 
++--------------------------------------------------------------------+
+
+BACKGROUND AND OBJECTIVES
+-------------------------
+
+The data set for this year's Cup has been generously provided by the
+Paralyzed Veterans of America (PVA).  PVA is a not-for-profit
+organization that provides programs and services for US veterans with
+spinal cord injuries or disease.  With an in-house database of over 13
+million donors, PVA is also one of the largest direct mail fund
+raisers in the country.
+
+Participants in the '98 CUP will demonstrate the performance of their
+tool by analyzing the results of one of PVA's recent fund raising
+appeals.  This mailing was sent to a total of 3.5 million PVA donors
+who were on the PVA database as of June 1997.  Everyone included in
+this mailing had made at least one prior donation to PVA.
+
+The mailing included a gift (or "premium") of personalized name &
+address labels plus an assortment of 10 note cards and envelopes.  All
+of the donors who received this mailing were acquired by PVA through
+similar premium-oriented appeals such as this.
+
+One group that is of particular interest to PVA is "Lapsed" donors.
+These are individuals who made their last donation to PVA 13 to 24
+months ago.  They represent an important group to PVA, since the
+longer someone goes without donating, the less likely they will be to
+give again.  Therefore, recapture of these former donors is a critical
+aspect of PVA's fund raising efforts.
+
+However, PVA has found that there is often an inverse correlation
+between likelihood to respond and the dollar amount of the gift, so a
+straight response model (a classification or discrimination task) will
+most likely net only very low dollar donors.  High dollar donors will
+fall into the lower deciles, which would most likely be suppressed
+from future mailings.  The lost revenue of these suppressed donors
+would then offset any gains due to the increased response rate of the
+low dollar donors.
+
+Therefore, to improve the cost-effectiveness of future direct
+marketing efforts, PVA wishes to develop a model that will help them
+maximize the net revenue (a regression or estimation task) generated
+from future renewal mailings to Lapsed donors.
+
++--------------------------------------------------------------------+
+| EVALUATION RULES                                                   |
++--------------------------------------------------------------------+
+
+Once again, the objective of the analysis will be to maximize the net
+revenue generated from this mailing - a censored regression or
+estimation problem. The response variable is, thus, continuous (for 
+the lack of a better common term.) Alhough we are releasing both the
+binary and the continuous versions of the target variable (TARGET_B
+and TARGET_D respectively), the program committee will use the
+predicted value of the donation (dollar) amount (for the target
+variable TARGET_D) in evaluating the results. So, returning the
+predicted value of the binary target variable TARGET_B and its
+associated probability/strength will not be sufficient. 
+
+The typical outcome of predictive modeling in database marketing is 
+an estimate of the expected response/return per customer in the
+database. A marketer will mail to a customer so long as the expected 
+return from an order exceeds the cost invested in generating the order, 
+i.e., the cost of promotion. For our purpose, the package cost 
+(including the mail cost) is $0.68 per piece mailed.
+
++--------------------------------------------------------------------+
+| DATA SOURCES and ORDER & TYPE OF THE VARIABLES IN THE DATA SETS    |
++--------------------------------------------------------------------+
+
+The dataset includes:
+
+o 24 months of detailed PVA promotion and giving history (covering the
+  period 12 to 36 months prior to the "97NK" mailing)
+
+o A summary of the promotions sent to the donors over the most recent
+  12 months prior to the "97NK" mailing (by definition, none of these
+  donors responded to any of these promotions)
+
+o Summary variables reflecting each donor's lifetime giving history
+  (e.g., total # of donations prior to "97NK" mailing, total $ amount
+  of the donations, etc.)
+
+o Overlay demographics, including a mix of household and area level
+  data
+
+o All other available data from the PVA database (e.g., date of first
+  gift, state, origin source, etc.)
+
+The fields are described in greater detail in the data dictionary file
+<filename: cup98DIC.txt>.
+
+The name of the variables in the learning and validation data sets is
+included in each file as the top (header) record. For your
+information, they are listed below again (ordered by data set
+position) along with the filed type information (Num: numeric, Char:
+string/character.)
+
++--------------------------------------------------------------------+
+| DATA (PRE)PROCESSING                                               |
++--------------------------------------------------------------------+
+
+General 
+-------
+
+o The field CONTROLN is a unique record identifier (an index) and
+should not be used in modeling
+
+o Response flag (field name: TARGET_B) indicates whether or not the
+lapsed donor responded to the campaign. THIS FIELD SHOULD NOT BE USED
+DURING MODEL BUILDING.
+
+o Blanks in string or character variables correspond to missing
+values.  Periods and/or blanks in the numeric variables correspond to
+missing values.
+
+Data preprocessing tasks include the following:
+
+Noisy Data
+----------
+
+Some of the fields in the analysis file may contain data entry and/or
+formatting errors. You are expected to clean these fields (without
+excluding the records.)
+
+Records and Fields with Missing and Sparse Data
+-----------------------------------------------
+
+Discovery methods vary in the way they treat the missing values. While
+some simply disregard missing values or omit the corresponding
+records, others infer missing values from known values, or treat
+missing data as a special value to be included additionally in the
+attribute domain.
+
+For the purposes of KDD-CUP-98 the records and/or fields should not be
+omitted from analysis because they contain missing data. Instead, the
+missing data should be inferred from known values (e.g., mean, median,
+mode, a modeled value, or any other way supported by your tool.) One
+exception to this rule is the attributes containing 99.5 percent or
+more missings. You are expected to omit these attributes from the
+analysis.
+
+You are also expected to drop attributes with 'sparse'
+distributions. Sparse data occur when the events actually represented
+in given data make only a very small subset of the event space.
+
+Fields Containing Constants
+---------------------------
+
+Fields containing a constant value (i.e., there is only one value for
+all the records) should be dropped from the analysis. Attributes
+containing missing and one valid level (e.g., 'Y') are not considered
+as constants and should be included in the analysis.
+
+Time Frame and Date Fields
+--------------------------
+
+This mailing was mailed to a total of 3.5 million PVA donors who were
+on the PVA database as of June 1997. All information contained in the
+analysis dataset reflects the donor status prior to 6/97 (except the
+gift receipt dates, which will follow the promotion dates.) This date
+could be used as the "end date" or "rerefence date" in the calculation
+of "number of months since" variables.
+
+ATTRIBUTE TYPE
+--------------
+
+See the data dictionary to determine the attribute types. 
+
+
++--------------------------------------------------------------------+
+| KDD-CUP-98 Program Committee                                       |
++--------------------------------------------------------------------+
+
+o Vasant Dhar, New York University, New York, NY
+o Tom Fawcett, Bell Atlantic, New York, NY
+o Georges Grinstein, University of Massachusetts, Lowell, MA
+o Ismail Parsa, Epsilon, Burlington, MA
+o Gregory Piatetsky-Shapiro, Knowledge Stream Partners, Boston, MA
+o Foster Provost, Bell Atlantic, New York, NY
+o Kyusoek Shim, Bell Laboratories, Murray Hill, NJ
+
+
++--------------------------------------------------------------------+
+| TERMINOLOGY-GLOSSARY                                               |
++--------------------------------------------------------------------+
+
+[GLOSSARY]
+
+For more information on the terminology used throughout this
+documentation, refer to the questionnaire documentation (file name:
+cup98QUE.txt.)
+
+o attribute = field = variable = feature
+o responders = targets
+o non-reponders = non-targets 
+o output = target = dependent variable
+o inputs = independent variables
+o analysis file = analysis sample = combined learning and validation 
+  files 
+
++--------------------------------------------------------------------+
+| VALtargt.README File Description ***missing fields***                                  |
++--------------------------------------------------------------------+
+
+o This file contains the target fields that were left out of the 
+  validation data set that was sent to the KDD-CUP-98 participants. 
+  These fields were used by the KDD-CUP-98 Committee to evaluate the 
+  accuracy of the predictions submitted by the participants. 
+ 
+o The file is in comma delimited format and contains 96,367 records 
+  and the following 3 fields: 
+
+  CONTROLN     Control number (unique record identifier)
+
+  TARGET_B     Target Variable: Binary Indicator for Response to the 
+               97NK Mailing
+
+  TARGET_D     Target Variable: Donation Amount (in $) associated 
+               with the Response to the 97NK Mailing
+
+  The first/header row of the file contains the field names.
+
+o The field CONTROLN will be used as the match key to merge these
+  3 fields into the original validation data set (file name:
+  cup98VAL.txt)
+
+[TERMINOLOGY-GLOSSARY]
+
+o DATA PREPROCESSING or PREPARATION includes data clean-up,
+  elimination of unusable variables, treating missing values and DATA
+  TRANSFORMATIONS such as adding new variables, performing
+  calculations on existing variables, creating interaction variables,
+  grouping continuous variables into ranges and managing categorical
+  variables in different ways, etc.
+
+o EXPLORATORY DATA ANALYSIS (EDA) provides a preliminary view of the
+  data set in a univariate (one variable at a time), bivariate (two
+  variables at a time) or multivariate sense (more than two variables
+  at a time). EDA, as used below, describes the search for patterns,
+  relationships or functional dependencies that are not attributable
+  to chance.
+
+o DATA MINING is often used as a synonym for KDD. For our purposes,
+  data mining is a step in the overall knowledge discovery process.
+  It refers to a class of methods/algorithms used to extract
+  patterns from data.  
+
+o The process of KNOWLEDGE DISCOVERY and the process of DATA ANALYSIS
+  and MODELING are used synonymously.
+
+o ATTRIBUTE, FIELD, VARIABLE and FEATURE are synonyms.
+
+o RECORDS, CASES, OBSERVATIONS and EXAMPLES are synonyms.
+
+o SPARSE DATA are when the events actually represented in a given
+  datum make only a very small subset of the event space. They become
+  harder to spot and summarize in a pattern. This is sometimes called
+  small volume data.
+
+o NOISY DATA contain errors due to the nature of data collection, data
+  entry or formatting errors.
+
+o MISSING DATA happen when values for some records and attributes are
+  missing because they were not measured, not answered or simply lost.
+
+o A BALANCED DATA SET is a data set which contains a similar number of
+  examples from each class that the algorithm is trying to predict.
+
+o An ARTIFICIALLY EXTENDED or INFLATED DATA SET is when the records
+  that represent the class with a relatively tiny number of examples
+  have been replicated on purpose to balance the data set.
+
+o ANALYSIS FILE, ANALYSIS SAMPLE and, LEARNING AND VALIDATION FILES 
+  COMBINED represent the same entity. 
+
+o ATTRIBUTE or VARIABLE TYPE characterizes the type of values in the
+  set of possible values of an attribute. An attribute can be nominal,
+  ordinal, interval, continuous and so forth.
+
+o CATEGORICAL VARIABLES represent nominal and ordinal variables. 
+
+o FEATURE SUBSET SELECTION and VARIABLE SELECTION are used
+  synonymously.
+
+o FEATURE REDUNDANCY or (MULTI)COLLINEARITY exists when the columns of
+  a data matrix are linearly or very close to being linearly dependent
+  such that it is possible to express some variables as a function of
+  others. This also called FUNCTIONAL RELATION.
+
+o The SCORING CODE is a stand alone C, C++ or other programming
+  language callable program or hard code that carries out all the
+  steps required to implement the learning algorithm outside the model
+  building environment. It is ultimately used in computing the
+  predicted value or output from raw data. In addition to the rules or
+  the numeric values of the weights, the scoring code also includes
+  preprocessing statements for data treatment. For the decision tree
+  algorithms, for example, the data preprocessing code along with
+  the 'if-then-else' rules constitutes the scoring code.
+
+o LIFT TABLES or LIFT CHARTS (a.k.a. gains charts or tables) are used
+  in the field of database marketing to evaluate the performance of
+  predictive models and to make marketing decisions. The term 'lift'
+  implies improvement over random targeting or no targeting at all and
+  computed as follows:
+
+  1. Sort the file representing the market to which the algorithm will
+     be applied by descending order of the predicted probability/score
+     or output.
+
+  2. Split the sorted file into 10 or 20 equally sized groups (in terms
+     of frequency count) based on the number of records. The resulting
+     groups or quantiles are called deciles or demi-deciles,
+     respectively.
+
+  3. Compute the percent of targets in each decile or demi-decile.
+
+  4. The ratio of the percent of targets in each decile or demi-decile
+     to the percent of targets in the file provides the lift. 
+
+  5. The cumulative lift or the cumulative percent of responders is
+     the cumulative count of the responders up to each decile or
+     demi-decile.
+
+  Usually, RMS error, correlation or classification table results are
+  all proportional to the cumulative lift. It is not unusual to have
+  the highest lift not be the highest RMS, correlation or
+  classification rate.
+ 
+  For the calculation of the lift in the case of a continuous target
+  variable, please refer to the Evaluation Rules section of the 
+  KDD-CUP documentation <file name: cup98DOC.txt>.
+
+o RESPONDERS refer to TARGETS.
+
+o NON-REPONDERS refer to NON-TARGETS. 
+
+o TARGET and DEPENDENT VARIABLE are synonyms.
+
+o OUTPUT, PREDICTED PROBABILITY and PREDICTED SCORE are used
+  synonymously.
+
+o INPUTS, INDEPENDENT VARIABLES and PREDICTORS are synonyms.
+
+o WEIGHTS are the same as COEFFICIENTS.
+
+
+======================================================================
+EPSILON CONFIDENTIAL      EPSILON CONFIDENTIAL    EPSILON CONFIDENTIAL
+
+    INFORMATION LISTED BELOW IS AVAILABLE UNDER THE TERMS OF THE  
+                      CONFIDENTIALITY AGREEMENT                
+
+EPSILON CONFIDENTIAL      EPSILON CONFIDENTIAL    EPSILON CONFIDENTIAL
+======================================================================
