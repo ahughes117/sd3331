@@ -14,12 +14,10 @@ CREATE TABLE sample AS (SELECT
     DOMAIN,
     AGE,
     HOMEOWNR,
-    NUMCHLD,
     INCOME,
     GENDER,
     WEALTH1,
     HIT,
-    MAJOR,
     WEALTH2,
     ADATE_2,
     RFA_2,
@@ -27,7 +25,9 @@ CREATE TABLE sample AS (SELECT
     NGIFTALL,
     AVGGIFT,
     TARGET_B,
-    TARGET_D FROM
+    TARGET_D 
+FROM
     kdd98
+WHERE ODATEDW <> '' AND DOB <> '' AND DOMAIN <> '' AND AGE <> '' AND HOMEOWNR <> '' AND INCOME <> '' 
 ORDER BY (SELECT RAND())
 LIMIT 2000);
