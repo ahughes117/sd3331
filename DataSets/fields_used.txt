@@ -161,9 +161,6 @@ HIT                         MOR Flag # HIT (Mail Order Response)
                             Indicates total number of known times the donor has 
                             responded to a mail order offer other than PVA's.
 							
-MAJOR                       Major ($$) Donor Flag
-                            _ = Not a Major Donor
-                            X = Major Donor
 							
 WEALTH2                     Wealth Rating
                             Wealth rating uses median family income and

@@ -25,7 +25,6 @@ CREATE TABLE sample AS (SELECT
     NGIFTALL,
     AVGGIFT,
     TARGET_B,
-    TARGET_D 
 FROM
     kdd98
 WHERE ODATEDW <> '' AND DOB <> '' AND DOMAIN <> '' AND AGE <> '' AND HOMEOWNR <> '' AND INCOME <> '' 
